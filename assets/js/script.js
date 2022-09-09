@@ -20,7 +20,8 @@ function createScheduleRow(time, event) {
         .text(time.format('h a'))                                                   // set text to show the hour represented by the row
         .addClass(['align-middle', 'col-auto', 'w-10', 'border', 'border-left-0'])  // add classes
 
-    let eventColumn = generateScheduleColumn($('<textarea>'), 'event', time);   // create event column
+    let eventColumn = generateScheduleColumn($('<textarea>'), 'event', time)    // create event column
+        .on('change', () => eventColumn.val(eventColumn.val().trim()));         // listen for changes to text so that we can trim unnecessary whitespace
     if(event) eventColumn.text(event);                                          // if there is previously saved content, we need to put it into the text area
     eventColumn.addClass(eventClasses);                                         // add classes
 

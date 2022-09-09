@@ -19,7 +19,11 @@ function saveData() {
 }
 
 function setData(hour, value) {
-    data[hour.toString()] = value;
+    let savingValue = value.trim();
+    if(value === "") {
+        savingValue = undefined;
+    }
+    data[hour.toString()] = savingValue;
 }
 
 let scheduleDataString = localStorage.getItem('schedule_data');
