@@ -34,6 +34,7 @@ function createScheduleRow(time, event) {
 
     // create the schedule row, appending each column in the proper order
     let scheduleRow = $('<div>').addClass('row')
+        .attr('data-hour', time.hour()) // set a data attribute for helping us save later
         .append(timeColumn)
         .append(eventColumn)
         .append(saveButton);
@@ -42,9 +43,13 @@ function createScheduleRow(time, event) {
     scheduleTable.append(scheduleRow);
 }
 
-// Will run when the save button is clicked
+// will run when the save button is clicked
 function clickSaveButton() {
-    // TODO Implement
+    let scheduleRow = $(this).parent();             // get the schedule row this save column is part of
+    let eventColumn = scheduleRow.find('textarea'); // then the event column that's part of the schedule row
+    let event = eventColumn.val();                  // grab the text in the textarea
+    setData(scheduleRow.attr('data-hour'), event);  // set the event data of the hour
+    saveData();                                     // save data
 }
 
 // iterate across each hour in an average 9-5 and create a row
