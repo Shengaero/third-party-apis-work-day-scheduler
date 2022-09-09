@@ -10,12 +10,34 @@ for(hour in data) {
 
 function createScheduleRow(time, event) {
     console.log(event);
-    let hour = time.format('h a');
-    let colorClass = time.hour() === now.hour()? 'bg-danger text-light': time.isBefore(now)? 'bg-light text-dark' : 'bg-success text-light';
-    let scheduleRow = $('<div class="row">')
-        .append($('<div class="p-0 align-middle col-auto w-10 border-top border-bottom">').text(hour))
-        .append($('<div class="col ' + colorClass + '">').text('test'))
-        .append($('<div class="col-auto w-10">'));
+
+    let timeColumn = $('<div>')
+            .attr('id', `col-time-${time.format('h-a')}`)
+            .addClass(['align-middle', 'col-auto', 'w-10', 'border', 'border-left-0'])
+            .text(time.format('h a'));
+
+    let eventClasses = ['col', 'text-light'];
+    if(time.hour() === now.hour()) {
+        eventClasses.push('bg-danger');
+    } else if(time.isBefore(now)) {
+        eventClasses.push('bg-secondary');
+    } else {
+        eventClasses.push('bg-success');
+    }
+
+    let eventColumn = $('<div>')
+            .attr('id', `col-event-${time.format('h-a')}`)
+            .addClass(eventClasses);
+    // TODO Add input function
+
+    let saveColumn = $('<div>')
+            .attr('id', `col-save-${time.format('h-a')}`)
+            .addClass(['col-auto', 'w-10', 'text-light', 'border', 'rounded-circle']);
+
+    let scheduleRow = $('<div>').addClass('row')
+        .append(timeColumn)
+        .append(eventColumn)
+        .append(saveColumn);
 
     scheduleTable.append(scheduleRow);
 }
