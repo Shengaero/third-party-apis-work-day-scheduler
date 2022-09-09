@@ -16,7 +16,7 @@ function createScheduleRow(time, event) {
             .addClass(['align-middle', 'col-auto', 'w-10', 'border', 'border-left-0'])
             .text(time.format('h a'));
 
-    let eventClasses = ['col', 'text-light'];
+    let eventClasses = ['col', 'd-flex', 'pl-0', 'pr-0','text-light'];
     if(time.hour() === now.hour()) {
         eventClasses.push('bg-danger');
     } else if(time.isBefore(now)) {
@@ -27,12 +27,13 @@ function createScheduleRow(time, event) {
 
     let eventColumn = $('<div>')
             .attr('id', `col-event-${time.format('h-a')}`)
-            .addClass(eventClasses);
+            .addClass(eventClasses)
+            .append($('<textarea>').addClass(['flex-fill', 'border-0']));
     // TODO Add input function
 
     let saveColumn = $('<div>')
             .attr('id', `col-save-${time.format('h-a')}`)
-            .addClass(['col-auto', 'w-10', 'text-light', 'border', 'rounded-circle']);
+            .addClass(['col-auto', 'w-10', 'text-light', 'border', 'border-right-0']);
 
     let scheduleRow = $('<div>').addClass('row')
         .append(timeColumn)
