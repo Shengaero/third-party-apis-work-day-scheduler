@@ -1,4 +1,9 @@
-let now = moment(); // get the current time
+// if there is no 'now', create one
+// this is primarily for testing so another script can create their own time
+if((typeof now) === 'undefined') {
+    var now = moment();
+}
+
 let scheduleTable = $('#schedule-table'); // grab the schedule table to populate with rows
 
 // this function will help generate columns in a less messy way
@@ -41,12 +46,6 @@ function createScheduleRow(time, event) {
         .append(saveColumn);
     // append the row to the table
     scheduleTable.append(scheduleRow);
-}
-
-// this function is available via a gitignored script
-// it will only load if the script is loaded via HTML, which for the deployed application the script tag to load it is commented out
-if((typeof __debugTimeSetToTestMode) !== 'undefined') {
-    __debugTimeSetToTestMode();
 }
 
 // iterate across each hour in an average 9-5 and create a row
