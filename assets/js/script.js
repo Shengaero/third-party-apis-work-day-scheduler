@@ -4,6 +4,8 @@ if((typeof now) === 'undefined') {
     var now = moment();
 }
 
+let currentDay = $('#current-day'); // element that will display the current day to the user
+let clearScheduleButton = $('#clear-schedule-button'); // button to clear schedule
 let scheduleTable = $('#schedule-table'); // grab the schedule table to populate with rows
 
 // this function will help generate columns in a less messy way
@@ -53,6 +55,26 @@ function clickSaveButton() {
     saveData();                                     // save data
 }
 
+// this will initialize tooltips
+$(() => {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+// clear button functionality 
+clearScheduleButton.on('click', () => {
+    let textareas = scheduleTable.find('.row textarea');
+    textareas.val('');
+    for(let i = 0; i < textareas.length; i++) {
+        let textarea = textareas[i];
+        let hour = $(textarea).parent().attr('data-hour');
+        setData(hour, '');
+    }
+    saveData();
+});
+
+// set text for current day
+currentDay.text(now.format('dddd, MMMM Do YYYY'));
+
 // iterate across each hour in an average 9-5 and create a row
 for(hour in data) {
     // create a new moment and use that to manage the individual row in relation to the current time
@@ -61,3 +83,4 @@ for(hour in data) {
     // create the row
     createScheduleRow(time, data[hour]);
 }
+// scheduleTable.append($('<button>').addClass(['btn', 'btn-danger', 'float-right', 'w-10']).append($('<i>').addClass(['fas', 'fa-trash-alt'])))
